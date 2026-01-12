@@ -60,7 +60,28 @@ def update_task():
 	print("แก้ไขงานสำเร็จ!")
 
 def delete_task():
-	pass
+	if not tasks:
+		print("\nยังไม่มีงานในรายการ")
+		return
+	print("\n--- ลบงาน ---")
+	for idx, task in enumerate(tasks, start=1):
+		status = 'เสร็จแล้ว' if task['completed'] else 'ยังไม่เสร็จ'
+		print(f"{idx}. {task['title']} (ครบกำหนด: {task['due_date']}, สถานะ: {status})")
+	try:
+		index = int(input("เลือกหมายเลขงานที่ต้องการลบ: "))
+		if index < 1 or index > len(tasks):
+			print("ลำดับไม่ถูกต้อง!")
+			return
+	except ValueError:
+		print("กรุณาป้อนตัวเลข!")
+		return
+	task = tasks[index-1]
+	confirm = input(f"ต้องการลบงาน '{task['title']}' จริงหรือไม่ (y/n): ").strip().lower()
+	if confirm == 'y':
+		del tasks[index-1]
+		print("ลบงานสำเร็จ!")
+	else:
+		print("ยกเลิกการลบงาน")
 
 def main_menu():
 	while True:
