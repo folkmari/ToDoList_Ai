@@ -1,5 +1,22 @@
+tasks = []
+next_id = 1
+
 def add_task():
-	pass
+	global next_id
+	print("\n--- เพิ่มงานใหม่ ---")
+	title = input("ชื่อเรื่อง: ")
+	description = input("รายละเอียด: ")
+	due_date = input("วันครบกำหนด (YYYY-MM-DD): ")
+	task = {
+		'id': next_id,
+		'title': title,
+		'description': description,
+		'due_date': due_date,
+		'completed': False
+	}
+	tasks.append(task)
+	print(f"เพิ่มงานสำเร็จ (ID: {next_id})")
+	next_id += 1
 
 def view_tasks():
 	pass
