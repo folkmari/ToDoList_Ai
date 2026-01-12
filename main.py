@@ -28,8 +28,36 @@ def view_tasks():
 		status = 'เสร็จแล้ว' if task['completed'] else 'ยังไม่เสร็จ'
 		print(f"{idx:<6}{task['title']:<20}{task['due_date']:<15}{status:<12}")
 
-def edit_task():
-	pass
+def update_task():
+	if not tasks:
+		print("\nยังไม่มีงานในรายการ")
+		return
+	print("\n--- แก้ไขงาน ---")
+	for idx, task in enumerate(tasks, start=1):
+		status = 'เสร็จแล้ว' if task['completed'] else 'ยังไม่เสร็จ'
+		print(f"{idx}. {task['title']} (ครบกำหนด: {task['due_date']}, สถานะ: {status})")
+	try:
+		index = int(input("เลือกหมายเลขงานที่ต้องการแก้ไข: "))
+		if index < 1 or index > len(tasks):
+			print("ลำดับไม่ถูกต้อง!")
+			return
+	except ValueError:
+		print("กรุณาป้อนตัวเลข!")
+		return
+	task = tasks[index-1]
+	print(f"\n--- แก้ไขงาน: {task['title']} ---")
+	new_title = input(f"ชื่อเรื่องใหม่ (Enter เพื่อข้าม): ")
+	new_description = input(f"รายละเอียดใหม่ (Enter เพื่อข้าม): ")
+	new_status = input(f"สถานะ (1=เสร็จแล้ว, 0=ยังไม่เสร็จ, Enter เพื่อข้าม): ")
+	if new_title:
+		task['title'] = new_title
+	if new_description:
+		task['description'] = new_description
+	if new_status == '1':
+		task['completed'] = True
+	elif new_status == '0':
+		task['completed'] = False
+	print("แก้ไขงานสำเร็จ!")
 
 def delete_task():
 	pass
@@ -48,7 +76,7 @@ def main_menu():
 		elif choice == '2':
 			view_tasks()
 		elif choice == '3':
-			edit_task()
+			update_task()
 		elif choice == '4':
 			delete_task()
 		elif choice == '5':
