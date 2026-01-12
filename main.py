@@ -19,7 +19,14 @@ def add_task():
 	next_id += 1
 
 def view_tasks():
-	pass
+	print("\n--- รายการงานทั้งหมด ---")
+	if not tasks:
+		print("ยังไม่มีงานในรายการ")
+		return
+	print(f"{'ลำดับ':<6}{'ชื่องาน':<20}{'วันครบกำหนด':<15}{'สถานะ':<12}")
+	for idx, task in enumerate(tasks, start=1):
+		status = 'เสร็จแล้ว' if task['completed'] else 'ยังไม่เสร็จ'
+		print(f"{idx:<6}{task['title']:<20}{task['due_date']:<15}{status:<12}")
 
 def edit_task():
 	pass
