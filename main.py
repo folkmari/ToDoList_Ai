@@ -1,5 +1,24 @@
+import json
+import os
 tasks = []
 next_id = 1
+
+def save_tasks():
+	with open("tasks.json", "w", encoding="utf-8") as f:
+		json.dump(tasks, f, ensure_ascii=False, indent=2)
+
+def load_tasks():
+	global tasks, next_id
+	if os.path.exists("tasks.json"):
+		with open("tasks.json", "r", encoding="utf-8") as f:
+			tasks = json.load(f)
+		if tasks:
+			next_id = max(task['id'] for task in tasks) + 1
+		else:
+			next_id = 1
+	else:
+		tasks = []
+		next_id = 1
 
 def add_task():
 	global next_id
@@ -102,9 +121,11 @@ def main_menu():
 			delete_task()
 		elif choice == '5':
 			print("ออกจากโปรแกรม...")
+			save_tasks()
 			break
 		else:
 			print("กรุณาเลือกเมนู 1-5 เท่านั้น!")
 
 if __name__ == "__main__":
+	load_tasks()
 	main_menu()
